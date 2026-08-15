@@ -36,9 +36,8 @@ module dispatcher(
 
 );
 
-//--------------------------------------------------
+
 // Registers
-//--------------------------------------------------
 
 integer i;
 
@@ -64,9 +63,8 @@ reg [2:0] distance1;
 reg [2:0] distance2;
 
 
-//--------------------------------------------------
+
 // Pending Queue Management
-//--------------------------------------------------
 
 always @(posedge clk or posedge reset)
 begin
@@ -85,9 +83,8 @@ begin
     else
     begin
 
-        //------------------------------------------
         // Store new hall requests
-        //------------------------------------------
+       
 
         next_up_pending   = up_pending   | hall_up_request;
         next_down_pending = down_pending | hall_down_request;
@@ -96,9 +93,9 @@ begin
         next_down_assigned = down_assigned;
 
 
-        //------------------------------------------
+       
         // Clear served UP requests
-        //------------------------------------------
+       
 
         if(elevator1_served && elevator1_served_up)
         begin
@@ -113,10 +110,9 @@ begin
         end
 
 
-        //------------------------------------------
+       
         // Clear served DOWN requests
-        //------------------------------------------
-
+       
         if(elevator1_served && elevator1_served_down)
         begin
             next_down_pending[elevator1_served_floor] = 1'b0;
@@ -130,9 +126,9 @@ begin
         end
 
 
-        //------------------------------------------
+       
         // Remember assigned requests
-        //------------------------------------------
+      
 
         if(hall_up_to_e1 != 8'b0)
             next_up_assigned = next_up_assigned | hall_up_to_e1;
@@ -158,16 +154,16 @@ begin
 end
 
 
-//--------------------------------------------------
+
 // Dispatcher Decision Logic
-//--------------------------------------------------
+
 
 always @(*)
 begin
 
-    //------------------------------
+    
     // Default outputs
-    //------------------------------
+    
 
     hall_up_to_e1   = 8'b0;
     hall_up_to_e2   = 8'b0;
@@ -180,9 +176,9 @@ begin
     request_floor = 3'd0;
 
 
-    //------------------------------
+   
     // Search UP requests first
-    //------------------------------
+ 
 
     for(i = 0; i < 8; i = i + 1)
     begin
@@ -201,9 +197,9 @@ begin
     end
 
 
-    //------------------------------
+   
     // Search DOWN requests
-    //------------------------------
+  
 
     if(!found)
     begin
@@ -227,9 +223,9 @@ begin
     end
 
 
-    //--------------------------------------------------
+    
     // Distance Calculation and Elevator Selection
-    //--------------------------------------------------
+  
 
     if(found)
     begin
@@ -245,10 +241,9 @@ begin
             distance2 = request_floor - elevator2_floor;
 
 
-        //--------------------------------------------------
+       
         // UP REQUEST
-        //--------------------------------------------------
-
+        
         if(request_is_up)
         begin
 
@@ -324,10 +319,9 @@ begin
         end
 
 
-        //--------------------------------------------------
+      
         // DOWN REQUEST
-        //--------------------------------------------------
-
+      
         else
         begin
 
