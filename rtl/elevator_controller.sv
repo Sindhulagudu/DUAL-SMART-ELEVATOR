@@ -300,7 +300,7 @@ begin
 
 
                                 
-                                // Nothing above -> search below
+                                // Nothing above then search below
                              
 
                                 if(!found)
